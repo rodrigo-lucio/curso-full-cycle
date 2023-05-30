@@ -1,22 +1,41 @@
 version: '3'
 
 services:
-  
-  laravel:
-    image: rodrigolucio/laravel:prod
-    container_name: laravel
+
+  app:
+    build: 
+      context: ./node
     networks:
-      - laranet
-  
-  nginx:
-    image: rodrigolucio/nginx:prod
-    container_name: nginx
-    networks:
-      - laranet
+      - node-network
+    volumes:
+      - ./node:/user/src/app
+    tty: true
     ports:
-      - "8080:80"
+      - "3000:3000"   
+    depends_on:
+      - db
+    # espera o mysql iniciar por 30 segundos pois o depends_on não garante isso pra gente
+
+    entrypoint: dockerize -wait tcp://db:3306 -timeout 30s docker-entrypoint.sh
+  db:
+    image: mysql:5.7
+    command: --innodb-use-native-aio=0
+    container_name: db
+    restart: always
+    tty: true
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql:/var/lib/mysql
+
+    environment:
+      - MYSQL_DATABASE=nodedb
+      - MYSQL_ROOT_PASSWORD=root
+
+    networks:
+      - node-network
 
 networks: 
-  laranet: 
+  node-network: 
     driver: bridge   
 
