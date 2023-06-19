@@ -61,7 +61,7 @@ type ComplexityRoot struct {
 
 	Mutation struct {
 		CreateCategory func(childComplexity int, input model.NewCategory) int
-		CreateCourse   func(childComplexity int, input model.NewCategory) int
+		CreateCourse   func(childComplexity int, input model.NewCourse) int
 	}
 
 	Query struct {
@@ -72,7 +72,7 @@ type ComplexityRoot struct {
 
 type MutationResolver interface {
 	CreateCategory(ctx context.Context, input model.NewCategory) (*model.Category, error)
-	CreateCourse(ctx context.Context, input model.NewCategory) (*model.Course, error)
+	CreateCourse(ctx context.Context, input model.NewCourse) (*model.Course, error)
 }
 type QueryResolver interface {
 	Categories(ctx context.Context) ([]*model.Category, error)
@@ -172,7 +172,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.CreateCourse(childComplexity, args["input"].(model.NewCategory)), true
+		return e.complexity.Mutation.CreateCourse(childComplexity, args["input"].(model.NewCourse)), true
 
 	case "Query.categories":
 		if e.complexity.Query.Categories == nil {
@@ -332,10 +332,10 @@ func (ec *executionContext) field_Mutation_createCategory_args(ctx context.Conte
 func (ec *executionContext) field_Mutation_createCourse_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 model.NewCategory
+	var arg0 model.NewCourse
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNNewCategory2githubᚗcomᚋdevfullcycleᚋ13ᚑGraphQLᚋgraphᚋmodelᚐNewCategory(ctx, tmp)
+		arg0, err = ec.unmarshalNNewCourse2githubᚗcomᚋdevfullcycleᚋ13ᚑGraphQLᚋgraphᚋmodelᚐNewCourse(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -842,7 +842,7 @@ func (ec *executionContext) _Mutation_createCourse(ctx context.Context, field gr
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().CreateCourse(rctx, fc.Args["input"].(model.NewCategory))
+		return ec.resolvers.Mutation().CreateCourse(rctx, fc.Args["input"].(model.NewCourse))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -3722,6 +3722,11 @@ func (ec *executionContext) marshalNID2string(ctx context.Context, sel ast.Selec
 
 func (ec *executionContext) unmarshalNNewCategory2githubᚗcomᚋdevfullcycleᚋ13ᚑGraphQLᚋgraphᚋmodelᚐNewCategory(ctx context.Context, v interface{}) (model.NewCategory, error) {
 	res, err := ec.unmarshalInputNewCategory(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) unmarshalNNewCourse2githubᚗcomᚋdevfullcycleᚋ13ᚑGraphQLᚋgraphᚋmodelᚐNewCourse(ctx context.Context, v interface{}) (model.NewCourse, error) {
+	res, err := ec.unmarshalInputNewCourse(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
