@@ -1,3 +1,4 @@
 
 docker/node/node_modules
 docker/mysql
+*.db
