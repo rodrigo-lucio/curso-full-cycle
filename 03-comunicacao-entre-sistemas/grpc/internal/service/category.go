@@ -69,10 +69,12 @@ func (c *CategoryService) GetCategory(ctx context.Context, in *pb.CategoryGetReq
 	return categoryResponse, nil
 }
 
+//Vai recebendo e retorna tudo de uma vez
 func (c *CategoryService) CreateCategoryStream(stream pb.CategoryService_CreateCategoryStreamServer) error {
 	categories := &pb.CategoryList{}
 
 	for {
+
 		category, err := stream.Recv()
 		if err == io.EOF { //Chegou no final, não tem mais nada pra processar que chegou da requisicao
 			return stream.SendAndClose(categories)
@@ -90,5 +92,30 @@ func (c *CategoryService) CreateCategoryStream(stream pb.CategoryService_CreateC
 			Name:        categoryResult.Name,
 			Description: categoryResult.Description,
 		})
+	}
+}
+
+//Vai recebendo e conforme vai processando ja vai devolvendo
+func (c *CategoryService) CreateCategoryStreamBidirectional(stream pb.CategoryService_CreateCategoryStreamBidirectionalServer) error {
+	for {
+		category, err := stream.Recv()
+		if err == io.EOF {
+			return nil
+		}
+		if err != nil {
+			return err
+		}
+		categoryResult, err := c.CategoryDB.Create(category.Name, category.Description)
+		if err != nil {
+			return err
+		}
+		err = stream.Send(&pb.Category{
+			Id:          categoryResult.ID,
+			Name:        categoryResult.Name,
+			Description: categoryResult.Description,
+		})
+		if err != nil {
+			return err
+		}
 	}
 }
