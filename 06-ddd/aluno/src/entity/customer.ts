@@ -1,6 +1,8 @@
+import Address from "./address";
+
 class Customer {
     _id: string;
-    _address: string = "";
+    _address!: Address;
     _name: string;
     _active: boolean = true;
 
@@ -40,7 +42,7 @@ class Customer {
     }
 
     activate() {  // Aqui a mesma coisa
-        if (this._address.length == 0) {
+        if (this._address == undefined) {
             throw new Error("Addres is mandatory to activate a customer");
         }
         this._active = true;
@@ -49,6 +51,11 @@ class Customer {
     deactivate() {
         this._active = false;
     }
+
+    set Address(address: Address) {
+        this._address = address;
+    }
+
 }
 
 // let customer = new Customer("ID").; ERRADO=Isso não pode, pois uma entidade sem nome não é valida
