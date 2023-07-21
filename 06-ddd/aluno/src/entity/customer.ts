@@ -19,7 +19,7 @@ export default class Customer {
     }
 
     private validateName() {
-        if (this._name.length == 0) {
+        if (this._name.length === 0) {
             throw Error("Name is required");
         }
         //Poderia validar se é nome completo
@@ -27,7 +27,7 @@ export default class Customer {
     }
 
     private validateId() {
-        if (this._id.length == 0) {
+        if (this._id.length === 0) {
             throw Error("Id is required");
         }
     }
