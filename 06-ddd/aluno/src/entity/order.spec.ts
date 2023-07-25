@@ -22,10 +22,17 @@ describe("Order unit tests", () => {
     });
 
     it("should calculate total", () => {
-        let item1 = new OrderItem("1", "MI10 LITE", 1, 1000);
-        let item2 = new OrderItem("2", "IPOHONE", 2, 1500);
+        let item1 = new OrderItem("1", "p1", "MI10 LITE", 1, 1000);
+        let item2 = new OrderItem("2", "p2", "IPOHONE", 2, 1500);
         let order = new Order("1", "2", [item1, item2]);
         expect(order.total()).toBe(4000);
+    });
+
+    it("should throw error if the item quantity is less or equal zero", () => {
+        expect(() => {
+            let item1 = new OrderItem("1", "p1", "MI10 LITE", 0, 1000);
+            let order = new Order("1", "2", [item1]);
+        }).toThrowError("Quantity must be greater than 0");
     });
 
 });
