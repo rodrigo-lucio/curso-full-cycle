@@ -2,3 +2,4 @@
 docker/node/node_modules
 docker/mysql
 *.db
+06-ddd/aluno/memory
