@@ -54,6 +54,14 @@ export default class Customer {
         this._active = false;
     }
 
+    changeAddress(address: Address) {
+        this._address = address;
+    }
+
+    get Address() {
+        return this._address;
+    }
+
     set Address(address: Address) {
         this._address = address;
     }
