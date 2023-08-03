@@ -31,7 +31,18 @@ export default class Order {
     total(): number {
         return this._items.reduce((acum, item) => acum + item.orderItemTotal(), 0);
     }
+    
+    get id(): string {
+        return this._id;
+    }
 
+    get customerId() {
+        return this._customerId;
+    }
+
+    get items() {
+        return this._items;
+    }
 }
 
 

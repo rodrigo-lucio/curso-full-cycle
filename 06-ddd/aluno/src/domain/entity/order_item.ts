@@ -26,8 +26,24 @@ export default class OrderItem {
         }
     }
 
+    get id() {
+        return this._id;
+    }
+
     get price() {
         return this._price;
+    }
+    
+    get name() {
+        return this._name;
+    }
+
+    get quantity() {
+        return this._quantity;
+    }
+
+    get productId() {
+        return this._productId;
     }
 
     orderItemTotal(): number {
