@@ -10,7 +10,7 @@ describe("Product repository test", () => {
     beforeEach(async () => {
         sequelize = new Sequelize({
             dialect: "sqlite",
-            storage: "memory",
+            storage: ":memory:",
             logging: false,
             sync: { force: true }
         });
@@ -97,7 +97,6 @@ describe("Product repository test", () => {
         const foundProducts = await productRepository.findAll();
 
         const products = [product, product2];
-        
         expect(products).toEqual(foundProducts);
     });
 

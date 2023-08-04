@@ -11,7 +11,7 @@ describe("Customer repository test", () => {
     beforeEach(async () => {
         sequelize = new Sequelize({
             dialect: "sqlite",
-            storage: "memory",
+            storage: ":memory:",
             logging: false,
             sync: { force: true }
         });
@@ -33,7 +33,7 @@ describe("Customer repository test", () => {
         await customerRepository.create(customer);
 
         const customerModel = await CustomerModel.findOne({ where: { id: customer.id} });
-
+       
         expect(customerModel.toJSON()).toStrictEqual({
             id: "1234",
             name: customer.name,
