@@ -30,7 +30,6 @@ describe("Domain events tests", () => {
         expect(eventDispatcher.getEventHandlers["ProductCreatedEvent"][0]).toMatchObject(eventHandlerEmail);
 
         eventDispatcher.unregister("ProductCreatedEvent", eventHandlerEmail);
-        eventDispatcher.unregister("ProductCreatedEvent", eventHandlerEmail);
 
         expect(eventDispatcher.getEventHandlers["ProductCreatedEvent"]).toBeDefined();
         expect(eventDispatcher.getEventHandlers["ProductCreatedEvent"].length).toBe(0);
@@ -54,8 +53,8 @@ describe("Domain events tests", () => {
 
 
     });
-    
-    it("should unregister all events handlers", () => {
+     
+   it("should unregister all events handlers", () => {
         const eventDispatcher = new EventDispatcher();
         const eventHandlerEmail = new SendEmailWhenProductIsCreatedHandler();
         const eventHandlerBroker = new PublishBrokerWhenProductIsCreatedHandler();
@@ -81,7 +80,6 @@ describe("Domain events tests", () => {
         eventDispatcher.notify(productCreatedEvent);
         expect(spyEventHandlerEmail).toHaveBeenCalled(); //verifica se o spy chamou o metodo
         expect(spyEventHandlerBroker).toHaveBeenCalled(); //verifica se o spy chamou o metodo
-
 
     });
 

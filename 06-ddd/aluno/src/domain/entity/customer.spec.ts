@@ -39,7 +39,6 @@ describe("Customer unit tests", () => {
         customer.Address = address;
 
         customer.activate();
-
         expect(customer.isActive()).toBe(true);
 
     });
