@@ -1,3 +1,4 @@
 {
-    "jestrunner.jestCommand": "npm test"
+    "jestrunner.jestCommand": "npm test",
+    "javascript.updateImportsOnFileMove.enabled": "always"
 }
