@@ -15,6 +15,7 @@ func TestProduct_Enable(t *testing.T) {
 
 	err := product.Enable()
 	require.Nil(t, err)
+	require.Equal(t, product.GetStatus(), application.ENABLED)
 
 	product.Price = 0
 	err = product.Enable()
@@ -27,11 +28,12 @@ func TestProduct_Disabled(t *testing.T) {
 	product.Status = application.DISABLED
 	product.Price = 0
 
-	err := product.Disabled()
+	err := product.Disable()
 	require.Nil(t, err)
+	require.Equal(t, product.GetStatus(), application.DISABLED)
 
 	product.Price = 10
-	err = product.Disabled()
+	err = product.Disable()
 	require.Equal(t, "the price must be zero in order to have the product disabled", err.Error())
 }
 
