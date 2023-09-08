@@ -51,6 +51,35 @@ func TestProductService_Create(t *testing.T) {
 	require.Equal(t, product.Status, result.GetStatus())
 }
 
+func TestProductService_Update(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+
+	productDb := application.NewProduct()
+	productDb.ID = "da801e33-b01a-4d2a-b362-d4bffde2aec0"
+	productDb.Name = "IPHONE"
+	productDb.Price = 21311
+
+	product := application.NewProduct()
+	product.ID = "da801e33-b01a-4d2a-b362-d4bffde2aec0"
+	product.Name = "IPHONE ALTERADO"
+	product.Price = 21311
+
+	persistence := mock_application.NewMockProductPersistenceInterface(ctrl)
+	persistence.EXPECT().Get(gomock.Any()).Return(productDb, nil).AnyTimes()
+	persistence.EXPECT().Save(gomock.Any()).Return(product, nil).AnyTimes()
+
+	service := application.ProductService{Persistence: persistence}
+
+	result, err := service.Update(product.GetID(), product.GetName(), product.GetPrice())
+	require.Nil(t, err)
+	require.Equal(t, product, result)
+	require.Equal(t, product.ID, result.GetID())
+	require.Equal(t, product.Name, result.GetName())
+	require.Equal(t, product.Price, result.GetPrice())
+	require.Equal(t, product.Status, result.GetStatus())
+}
+
 func TestProductService_EnableDisable(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
