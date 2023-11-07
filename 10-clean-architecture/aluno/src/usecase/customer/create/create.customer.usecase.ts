@@ -5,10 +5,10 @@ import Address from "../../../domain/customer/entity/address";
 
 export default class CreateCustomerUseCase {
 
-    private customerRepositor: CustomerRepositoryInterface;
+    private customerRepository: CustomerRepositoryInterface;
 
     constructor(customerRepository: CustomerRepositoryInterface) {
-        this.customerRepositor = customerRepository;
+        this.customerRepository = customerRepository;
     }
 
     async execute(input: InputCreateCustomerDTO): Promise<OutputCreateCustomerDTO> {
@@ -21,7 +21,7 @@ export default class CreateCustomerUseCase {
             )
         );
 
-        await this.customerRepositor.create(customer);
+        await this.customerRepository.create(customer);
 
         const customerCreated: OutputCreateCustomerDTO =  {
             id: customer.id,
