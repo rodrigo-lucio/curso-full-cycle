@@ -1,36 +1,27 @@
+import Entity from "../../@shared/entity/entity.abstract";
+import NotificationError from "../../@shared/notification/notificaton.error";
+import CustomerValidatorFactory from "../factory/customer.validator.factory";
 import Address from "./address";
 
-export default class Customer {
+export default class Customer extends Entity {
 
-    private _id: string;
     private _address!: Address;
     private _name: string;
     private _active: boolean = false;
     private _rewardPoints: number = 0;
 
     constructor(id: string, name: string) {
+        super();
         this._id = id;
         this._name = name;
         this.validate(); //A entidade sempre deve se auto-validar
+        if(this.notification.hasErrors()) {
+            throw new NotificationError(this.notification.getErrors());
+        }            
     }
 
     validate() {
-        this.validateName();
-        this.validateId();
-    }
-
-    private validateName() {
-        if (this._name.length === 0) {
-            throw Error("Name is required");
-        }
-        //Poderia validar se é nome completo
-        //Etc.,..
-    }
-
-    private validateId() {
-        if (this._id.length === 0) {
-            throw Error("Id is required");
-        }
+        CustomerValidatorFactory.create().validate(this);
     }
 
     changeName(name: string) { //Mudança de regra, o porque o negocio existe. Expressa o negócio. Usar isso ao invés de setName
@@ -40,7 +31,10 @@ export default class Customer {
 
         //Para depois mudar o nome
         this._name = name;
-        this.validateName();
+        this.validate();
+        if(this.notification.hasErrors()) {
+            throw new NotificationError(this.notification.getErrors());
+        }       
     }
 
     activate() {  // Aqui a mesma coisa
@@ -64,10 +58,6 @@ export default class Customer {
 
     set Address(address: Address) {
         this._address = address;
-    }
-
-    get id() {
-        return this._id;
     }
 
     get name() {
