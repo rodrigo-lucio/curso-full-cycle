@@ -35,8 +35,6 @@ describe("Unit tests for notification", () => {
 
 
     it("should check if notification has at leas one error", () => {
-
-       
         const notification = new Notification();
         const error = {
             message: "error message",
@@ -45,6 +43,18 @@ describe("Unit tests for notification", () => {
         
         notification.addError(error); 
         expect(notification.hasErrors()).toBe(true);
+
+    });
+
+    it("should get all errors props", () => {
+        const notification = new Notification();
+        const error = {
+            message: "error message",
+            context: "customer"
+        }
+        
+        notification.addError(error); 
+        expect(notification.getErrors()).toEqual([error]);
 
     });
 });
