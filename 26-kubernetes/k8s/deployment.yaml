@@ -8,7 +8,7 @@ spec:
   selector: 
     matchLabels:
       app: goserver
-  replicas: 10
+  replicas: 1
   template: 
     metadata:
       labels: 
@@ -16,11 +16,20 @@ spec:
     spec: 
       containers: 
         - name: goserver
-          image: "rodrigolucio/hello-go:v4"
-          env:
-            - name: my_host
-              value: "1.2.3.4" 
-            - name: my_port
-              value: "5432"
-            - name: my_database
-              value: "order"
+          image: "rodrigolucio/hello-go:v5.3"
+          envFrom:
+            - configMapRef:
+                name: goserver-env #Carrega todas as variaveis de ambiente do arquivo configmap-env.yaml, sem precisar declarar todas aqui em baixo novamente
+            - secretRef:
+                name: goserver-secret
+          volumeMounts:
+            - mountPath: "/go/myconfs"
+              name: config
+
+      volumes: 
+        - name: config
+          configMap:
+            name: configmap-myconfs
+            items:
+            - key: my_database
+              path: "myconfs.txt"
