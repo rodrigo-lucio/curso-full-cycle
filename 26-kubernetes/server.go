@@ -15,6 +15,8 @@ func main() {
 	http.HandleFunc("/", Hello)
 	http.HandleFunc("/configmap", ConfigMap)
 	http.HandleFunc("/secret", Secret)
+	http.HandleFunc("/startup", Startup)
+	http.HandleFunc("/readiness", Readiness)
 	http.HandleFunc("/healthz", Healthz)
 	http.ListenAndServe(":8000", nil)
 }
@@ -43,15 +45,46 @@ func Secret(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "User: %s. Password: %s", user, password)
 }
 
-// Função que simula erro 500 depois de 25 segundos
+func Startup(w http.ResponseWriter, r *http.Request) {
+	duration := time.Since(startedAt)
+	log.Println(fmt.Sprintf("Startup - Duration: %v"+
+		"", duration.Seconds()))
+	if duration.Seconds() < 10 {
+		w.WriteHeader(500)
+		w.Write([]byte(fmt.Sprintf("Duration: %v", duration.Seconds())))
+		log.Println(fmt.Sprintf("Startup - Not Started"))
+	} else {
+		log.Println(fmt.Sprintf("Startup - Started"))
+		w.WriteHeader(200)
+		w.Write([]byte("UP"))
+	}
+}
+
+func Readiness(w http.ResponseWriter, r *http.Request) {
+	duration := time.Since(startedAt)
+	log.Println(fmt.Sprintf("Readiness - Duration: %v"+
+		"", duration.Seconds()))
+	if false { //duration.Seconds() < 25 || duration.Seconds() > 40 - Descomentar para testar as probes
+		w.WriteHeader(500)
+		w.Write([]byte(fmt.Sprintf("Duration: %v", duration.Seconds())))
+		log.Println(fmt.Sprintf("Readiness - Not Ready"))
+	} else {
+		log.Println(fmt.Sprintf("Readiness - Ready"))
+		w.WriteHeader(200)
+		w.Write([]byte("UP"))
+	}
+}
+
 func Healthz(w http.ResponseWriter, r *http.Request) {
 	duration := time.Since(startedAt)
 	log.Println(fmt.Sprintf("Healthz - Duration: %v"+
 		"", duration.Seconds()))
-	if duration.Seconds() < 10 || duration.Seconds() > 30 {
+	if false { // duration.Seconds() > 60  - Descomentar para testar as probes
 		w.WriteHeader(500)
 		w.Write([]byte(fmt.Sprintf("Duration: %v", duration.Seconds())))
+		log.Println(fmt.Sprintf("Healthz - Down"))
 	} else {
+		log.Println(fmt.Sprintf("Healthz - UP"))
 		w.WriteHeader(200)
 		w.Write([]byte("UP"))
 	}

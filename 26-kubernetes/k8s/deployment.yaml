@@ -16,24 +16,32 @@ spec:
     spec: 
       containers: 
         - name: goserver
-          image: "rodrigolucio/hello-go:v5.3.1"
+          image: "rodrigolucio/hello-go:v5.4.1"
+
+          startupProbe:
+            httpGet:
+              path: /startup
+              port: 8000 # Porta do container
+            periodSeconds: 1
+            failureThreshold: 30
+
           readinessProbe:
             httpGet:
-              path: /healthz
+              path: /readiness
               port: 8000 # Porta do container
-            periodSeconds: 3
-            failureThreshold: 1
-            initialDelaySeconds: 10 # aguarda 10 segundos para começar a verificação
+            periodSeconds: 1
+            failureThreshold: 3
+            initialDelaySeconds: 1 
 
           livenessProbe:
             httpGet:
               path: /healthz
               port: 8000 # Porta do container
             periodSeconds: 5 # Faz a verificação a cada 5 segundos do healthz
-            failureThreshold: 1 # Quantas vezes tem que dar problema para ele reiniciar
+            failureThreshold: 3 # Quantas vezes tem que dar problema para ele reiniciar
             timeoutSeconds: 1 # Quanto tempo ele espera o health
             successThreshold: 1 #Quantas vezes ele testa para ter certeza que esta OK, famoso teste para garantir
-            initialDelaySeconds: 15
+            initialDelaySeconds: 15 # aguarda 15 segundos para começar a verificação
 
           envFrom:
             - configMapRef:
