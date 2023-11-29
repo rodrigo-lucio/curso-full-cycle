@@ -16,7 +16,15 @@ spec:
     spec: 
       containers: 
         - name: goserver
-          image: "rodrigolucio/hello-go:v5.4.1"
+          image: "rodrigolucio/hello-go:v5.4"
+
+          resources:
+            requests:
+              cpu: "0.3" # Minimo para rodar, guarda no cluster esse valor (reserva no sistema), se for a mais fica como pending
+              memory: 20Mi
+            limits:
+              cpu: "0.3" # Maximo que vai utilizar, não pode ultrapassar o poder do cluster em relação numero de replicas X cpu
+              memory: 25Mi
 
           startupProbe:
             httpGet:
