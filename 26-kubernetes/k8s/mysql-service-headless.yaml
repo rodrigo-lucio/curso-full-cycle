@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-headless  # Tem que ser o mesmo nome que esta no statefulset
+spec:
+  selector:
+    app: mysql
+  ports:
+      - port: 3306
+  clusterIP: None # aqui que está o segredo, para que o serviço fique Headles
+                  # para que cada pod do mysql tenha o seu DNS ex: rodar no pod do GO -> ping mysql-headless (vai direcionar para algum deles)
+                  # OU ping mysql-2.mysql-headless (vai redirecionar para o pod mysql2)
