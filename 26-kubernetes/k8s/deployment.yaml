@@ -16,7 +16,7 @@ spec:
     spec: 
       containers: 
         - name: goserver
-          image: "rodrigolucio/hello-go:v5.4"
+          image: "rodrigolucio/hello-go:v5.5"
 
           resources:
             requests:
@@ -29,14 +29,14 @@ spec:
           startupProbe:
             httpGet:
               path: /startup
-              port: 8000 # Porta do container
+              port: 8000
             periodSeconds: 1
             failureThreshold: 30
 
           readinessProbe:
             httpGet:
               path: /readiness
-              port: 8000 # Porta do container
+              port: 8000
             periodSeconds: 1
             failureThreshold: 3
             initialDelaySeconds: 1 
@@ -59,8 +59,13 @@ spec:
           volumeMounts:
             - mountPath: "/go/myconfs"
               name: config
+            - mountPath: "/go/pvc"
+              name: goserver-volume
+      volumes:
+        - name: goserver-volume
+          persistentVolumeClaim:
+            claimName: goserver-pvc
 
-      volumes: 
         - name: config
           configMap:
             name: configmap-myconfs
