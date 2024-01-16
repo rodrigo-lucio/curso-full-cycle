@@ -4,12 +4,14 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"math/rand"
 	"net/http"
 	"os"
 	"time"
 )
 
 var startedAt = time.Now()
+var random = rand.Intn(100)
 
 func main() {
 	http.HandleFunc("/", Hello)
@@ -22,12 +24,12 @@ func main() {
 }
 
 func Hello(w http.ResponseWriter, r *http.Request) {
-
+	log.Println(fmt.Sprintf("Hello"))
 	host := os.Getenv("my_host")
 	port := os.Getenv("my_port")
 	database := os.Getenv("my_database")
 
-	fmt.Fprintf(w, "Application envs by deployment.yml : host: %s, port: %s, database: %s", host, port, database)
+	fmt.Fprintf(w, "Application envs by deployment.yml : host: %s, port: %s, database: %s, random: %v", host, port, database, random)
 }
 
 func ConfigMap(w http.ResponseWriter, r *http.Request) {
@@ -86,7 +88,7 @@ func Healthz(w http.ResponseWriter, r *http.Request) {
 	} else {
 		log.Println(fmt.Sprintf("Healthz - UP"))
 		w.WriteHeader(200)
-		w.Write([]byte("UP"))
+		w.Write([]byte(fmt.Sprintf("UP - Random: %v", random)))
 	}
 
 }

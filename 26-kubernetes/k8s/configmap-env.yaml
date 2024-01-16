@@ -3,6 +3,6 @@ kind: ConfigMap
 metadata:
   name: goserver-env
 data:
-  my_host: "1.2.3.4"
-  my_port: "5433"
-  my_database: "order_novo"
+  my_host: "11.22.33.44"
+  my_port: "5432"
+  my_database: "order"

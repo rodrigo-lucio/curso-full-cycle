@@ -7,8 +7,8 @@ metadata:
 spec:
   selector: 
     matchLabels:
-      app: goserver
-  replicas: 1
+      app: goserver #Precisa ser o mesmo nome do selector.app do service para ele se achar
+  replicas: 3
   template: 
     metadata:
       labels: 
@@ -16,7 +16,7 @@ spec:
     spec: 
       containers: 
         - name: goserver
-          image: "rodrigolucio/hello-go:v5.5"
+          image: "rodrigolucio/hello-go:v5.8"
 
           resources:
             requests:
@@ -56,19 +56,19 @@ spec:
                 name: goserver-env #Carrega todas as variaveis de ambiente do arquivo configmap-env.yaml, sem precisar declarar todas aqui em baixo novamente
             - secretRef:
                 name: goserver-secret
-          volumeMounts:
-            - mountPath: "/go/myconfs"
-              name: config
-            - mountPath: "/go/pvc"
-              name: goserver-volume
-      volumes:
-        - name: goserver-volume
-          persistentVolumeClaim:
-            claimName: goserver-pvc
-
-        - name: config
-          configMap:
-            name: configmap-myconfs
-            items:
-            - key: my_database
-              path: "myconfs.txt"
+#          volumeMounts:
+#            - mountPath: "/go/myconfs"
+#              name: config
+#            - mountPath: "/go/pvc"
+#              name: goserver-volume
+#      volumes:
+#        - name: goserver-volume
+#          persistentVolumeClaim:
+#            claimName: goserver-pvc
+#
+#        - name: config
+#          configMap:
+#            name: configmap-myconfs
+#            items:
+#            - key: my_database
+#              path: "myconfs.txt"
