@@ -1,9 +1,7 @@
 import { Sequelize } from "sequelize-typescript";
+import ProductAdmFacadeFactory from "../factory/facade.factory";
 import ProductModel from "../repository/product.model";
 import ProductRepository from "../repository/product.repository";
-import AddProductUseCase from "../usecase/add-product/add-product.usecase";
-import ProductAdmFacade from "./product-adm.facade";
-import ProductAdmFacadeFactory from "../factory/facade.factory";
 
 describe("ProductAdmFacade tests", () => {
 
@@ -55,8 +53,6 @@ describe("ProductAdmFacade tests", () => {
         expect(product.description).toBe(input.description);
         expect(product.purchasePrice).toBe(input.purchasePrice);
         expect(product.stock).toBe(input.stock);
-
-
 
     });
 
