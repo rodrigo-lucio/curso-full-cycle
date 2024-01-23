@@ -7,6 +7,8 @@ const client = new Client({
     name: "John Doe",
     email:"john@john.com",
     address: "Street 1",
+    createdAt: new Date(),
+    updatedAt: new Date()
 });
 
 const MockRepository = () => {
