@@ -4,6 +4,7 @@ import ClientRepository from "../repository/client.repository";
 import AddClientUseCase from "../usecase/add-client/add-client.usecase";
 import ClientAdmFacade from "./client-adm.facade";
 import FindClientUseCase from "../usecase/find-client/find-client.usecase";
+import ClientAdmFacadeFactory from "../factory/facade.factory";
 
 describe("ClientAdmFacade test", () => {
     let sequelize: Sequelize;   	
@@ -28,12 +29,15 @@ describe("ClientAdmFacade test", () => {
 
     it("should create a client", async () => {
        
-        const repository = new ClientRepository();
-        const useCase = new AddClientUseCase(repository);
-        const facade = new ClientAdmFacade({
-            addClientUseCase: useCase,
-            findClientUseCase: undefined
-        });
+        // Sem a factory, seria assim:   
+        // const repository = new ClientRepository();
+        // const useCase = new AddClientUseCase(repository);
+        // const facade = new ClientAdmFacade({
+        //     addClientUseCase: useCase,
+        //     findClientUseCase: undefined
+        // });
+
+        const facade = ClientAdmFacadeFactory.create();
 
         const input = {
             id: "1",
@@ -54,15 +58,17 @@ describe("ClientAdmFacade test", () => {
 
     it("should find a client", async () => {
        
-        const repository = new ClientRepository();
-        const useCase = new FindClientUseCase(repository);
-        const useCaseAdd = new AddClientUseCase(repository);
-        const facade = new ClientAdmFacade({
-            addClientUseCase: useCaseAdd,
-            findClientUseCase: useCase
-        });
+        // Sem a factory, seria assim:        
+        // const repository = new ClientRepository();
+        // const useCase = new FindClientUseCase(repository);
+        // const useCaseAdd = new AddClientUseCase(repository);
+        // const facade = new ClientAdmFacade({
+        //     addClientUseCase: useCaseAdd,
+        //     findClientUseCase: useCase
+        // });
 
-        
+        const facade = ClientAdmFacadeFactory.create();
+
         const input = {
             id: "1",
             name: "Client 1",
@@ -81,7 +87,6 @@ describe("ClientAdmFacade test", () => {
         expect(client.name).toEqual(input.name);
         expect(client.email).toEqual(input.email);
         expect(client.address).toEqual(input.address);
-        
 
     });
 
