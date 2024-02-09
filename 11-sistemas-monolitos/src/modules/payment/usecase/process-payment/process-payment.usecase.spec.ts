@@ -1,5 +1,5 @@
 import Id from "../../../@shared/domain/value-object/id.value-object";
-import Transaction from "../../domain/transaction";
+import Transaction from "../../domain/transaction.entity";
 import ProcessPaymentUsecase from "./process-payment.usecase";
 
 const transactionExpected = new Transaction({
