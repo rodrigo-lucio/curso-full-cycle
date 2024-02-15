@@ -1,6 +1,6 @@
 import UseCaseInterface from "../../../@shared/usecase/use-case.interface";
 import Address from "../../domain/address.value-object";
-import InvoiceItem from "../../domain/invoice-items.entity";
+import InvoiceItem from "../../domain/invoice-item.entity";
 import Invoice from "../../domain/invoice.entity";
 import InvoiceGateway from "../../gateway/client.gateway";
 import { GenerateInvoiceUseCaseInputDto, GenerateInvoiceUseCaseOutputDto } from "./generate-invoice.dto";

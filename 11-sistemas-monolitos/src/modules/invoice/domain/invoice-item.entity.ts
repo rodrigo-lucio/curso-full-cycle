@@ -1,11 +1,12 @@
-import e from "express";
 import BaseEntity from "../../@shared/domain/entity/base.entity";
 import Id from "../../@shared/domain/value-object/id.value-object";
 
 type InvoiceItemProps = {
     id?: Id
     name: string
-    price: number
+    price: number,
+    createdAt?: Date,
+    updatedAt?: Date 
 }
 
 export default class InvoiceItem extends BaseEntity {
@@ -14,7 +15,7 @@ export default class InvoiceItem extends BaseEntity {
     private _price: number;
 
     constructor(props: InvoiceItemProps){
-        super(props.id);
+        super(props.id, props.createdAt, props.updatedAt);
         this._name = props.name;
         this._price = props.price;
     }

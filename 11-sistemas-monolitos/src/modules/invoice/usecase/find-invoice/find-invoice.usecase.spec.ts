@@ -1,6 +1,6 @@
 import Id from "../../../@shared/domain/value-object/id.value-object";
 import Address from "../../domain/address.value-object";
-import InvoiceItem from "../../domain/invoice-items.entity";
+import InvoiceItem from "../../domain/invoice-item.entity";
 import Invoice from "../../domain/invoice.entity";
 import FindInvoiceUseCase from "./find-invoice.usecase";
 
@@ -39,7 +39,7 @@ describe("Find invoice usecase unit test", () => {
 
     const MockRepository = () => {
         return {
-            add: jest.fn(),
+            save: jest.fn(),
             find: jest.fn().mockReturnValue(Promise.resolve(invoiceExpected)),
         };
     };
