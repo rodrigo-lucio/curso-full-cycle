@@ -52,10 +52,12 @@ describe("Generate invoice usecase unit test", () => {
         expect(result.items).toHaveLength(2);
 
         expect(result.items[0].id).toBeDefined();
+        expect(result.items[0].id).toBe(input.items[0].id);
         expect(result.items[0].name).toBe(input.items[0].name);
         expect(result.items[0].price).toBe(input.items[0].price);
         
         expect(result.items[1].id).toBeDefined();
+        expect(result.items[1].id).toBe(input.items[1].id);
         expect(result.items[1].name).toBe(input.items[1].name);
         expect(result.items[1].price).toBe(input.items[1].price);
 
