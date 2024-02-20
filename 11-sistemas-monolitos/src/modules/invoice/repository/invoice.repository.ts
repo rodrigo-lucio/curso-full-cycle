@@ -46,6 +46,7 @@ export default class InvoiceRepository implements InvoiceGateway {
             where: { id: id },
             include: [{ model: InvoiceItemModel }],
         });
+        
         if (!invoice) {
             throw new Error(`Invoice with id ${id} not found`);
         }
