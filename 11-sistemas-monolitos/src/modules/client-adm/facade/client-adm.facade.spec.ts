@@ -43,7 +43,13 @@ describe("ClientAdmFacade test", () => {
             id: "1",
             name: "Client 1",
             email: "client@client",
-            address: "Address do client",
+            document: "123456789",
+            street: "Rua do client",
+            number: "123",
+            complement: "Complemento do client",
+            city: "Cidade do client",
+            state: "Estado do client",
+            zipCode: "12345678"
         };
 
         await facade.addClient(input);
@@ -51,8 +57,14 @@ describe("ClientAdmFacade test", () => {
         expect(client.id).toEqual(input.id);
         expect(client.name).toEqual(input.name);
         expect(client.email).toEqual(input.email);
-        expect(client.address).toEqual(input.address);
-        
+        expect(client.document).toEqual(input.document);
+        expect(client.street).toEqual(input.street);
+        expect(client.number).toEqual(input.number);
+        expect(client.complement).toEqual(input.complement);
+        expect(client.city).toEqual(input.city);
+        expect(client.state).toEqual(input.state);
+        expect(client.zipCode).toEqual(input.zipCode);
+
 
     });
 
@@ -73,9 +85,14 @@ describe("ClientAdmFacade test", () => {
             id: "1",
             name: "Client 1",
             email: "client@client",
-            address: "Address do client",
+            document: "123456789",
+            street: "Rua do client",
+            number: "123",
+            complement: "Complemento do client",
+            city: "Cidade do client",
+            state: "Estado do client",
+            zipCode: "12345678"
         };
-
         await facade.addClient(input);
 
         const inputFind = {
@@ -86,7 +103,12 @@ describe("ClientAdmFacade test", () => {
         expect(client.id).toEqual(input.id);
         expect(client.name).toEqual(input.name);
         expect(client.email).toEqual(input.email);
-        expect(client.address).toEqual(input.address);
+        expect(client.street).toEqual(input.street);
+        expect(client.number).toEqual(input.number);
+        expect(client.complement).toEqual(input.complement);
+        expect(client.city).toEqual(input.city);
+        expect(client.state).toEqual(input.state);
+        expect(client.zipCode).toEqual(input.zipCode);
 
     });
 

@@ -6,7 +6,13 @@ const client = new Client({
     id: new Id("1"),
     name: "John Doe",
     email:"john@john.com",
-    address: "Street 1",
+    document: "123456",
+    street: "Rua 1",
+    number: "123",
+    complement: "Complemento",
+    city: "Cidade",
+    state: "Estado",
+    zipCode: "123456",
     createdAt: new Date(),
     updatedAt: new Date()
 });
@@ -33,7 +39,6 @@ describe("Find client usecase unit test", () => {
         expect(result.id).toBeDefined();
         expect(result.name).toBe(client.name);
         expect(result.email).toBe(client.email);
-        expect(result.address).toBe(client.address);
         
     });
 
