@@ -25,8 +25,8 @@ export interface FindInvoiceFacadeOutputDTO {
 
 export interface GenerateInvoiceFacadeInputDto {
     name: string;
-    document: string;
     street: string;
+    document: string;
     number: string;
     complement: string;
     city: string;
