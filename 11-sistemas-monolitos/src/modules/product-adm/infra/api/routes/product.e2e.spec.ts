@@ -13,7 +13,7 @@ describe("Product e2e test", () => {
             .send({
                 name : "Camiseta",
                 description: "Camiseta de algodao estampada",
-                purchasePrice : 79.9,
+                price : 79.9,
                 stock: 5
             });
 
@@ -21,7 +21,7 @@ describe("Product e2e test", () => {
         expect(response.body).toHaveProperty("id");
         expect(response.body.name).toBe("Camiseta");
         expect(response.body.description).toBe("Camiseta de algodao estampada");
-        expect(response.body.purchasePrice).toBe(79.9);
+        expect(response.body.price).toBe(79.9);
         expect(response.body.stock).toBe(5);
     });
 
@@ -31,7 +31,7 @@ describe("Product e2e test", () => {
             .send({
                 name : "Camiseta",
                 description: "Camiseta de algodao estampada",
-                purchasePrice : 79.9,
+                price : 79.9,
                 stock: 12
             });
 

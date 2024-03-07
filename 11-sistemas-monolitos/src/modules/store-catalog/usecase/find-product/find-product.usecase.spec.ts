@@ -6,7 +6,7 @@ const product = new Product({
     id: new Id("1"),
     name: 'Product 1',
     description: 'Description 1',
-    salesPrice: 10,
+    price: 10,
 });
 
 const mockRepository = () => {

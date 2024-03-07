@@ -1,6 +1,6 @@
-import AggregateRoot from "../../../@shared/domain/entity/aggregate-root.interface";
-import BaseEntity from "../../../@shared/domain/entity/base.entity";
-import Id from "../../../@shared/domain/value-object/id.value-object";
+import AggregateRoot from "../../@shared/domain/entity/aggregate-root.interface";
+import BaseEntity from "../../@shared/domain/entity/base.entity";
+import Id from "../../@shared/domain/value-object/id.value-object";
 import Client from "./client.entity";
 import Product from "./product.entity";
 
@@ -40,7 +40,7 @@ export default class Order extends BaseEntity implements AggregateRoot {
     }
 
     get total() {
-        return this._products.reduce((total, product) => total + product.salePrice, 0);
+        return this._products.reduce((total, product) => total + product.price, 0);
     }
 
 }

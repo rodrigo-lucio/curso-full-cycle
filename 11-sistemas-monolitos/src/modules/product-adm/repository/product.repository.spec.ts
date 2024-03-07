@@ -30,7 +30,7 @@ describe("ProductRepository test", () => {
             id: new Id("1"),
             name: "Product 1",
             description: "Product 1 description",
-            purchasePrice: 50,
+            price: 50,
             stock: 10
         }
 
@@ -46,7 +46,7 @@ describe("ProductRepository test", () => {
         expect(productProps.id.id).toEqual(productDb.id);  
         expect(productProps.name).toEqual(productDb.name);
         expect(productProps.description).toEqual(productDb.description);
-        expect(productProps.purchasePrice).toEqual(productDb.purchasePrice);
+        expect(productProps.price).toEqual(productDb.price);
         expect(productProps.stock).toEqual(productDb.stock);
 
     });
@@ -57,7 +57,7 @@ describe("ProductRepository test", () => {
             id: "1",
             name: "Product 1",
             description: "Product 1 description",
-            purchasePrice: 50,
+            price: 50,
             stock: 10,
             createdAt: new Date(),
             updatedAt: new Date()
@@ -67,7 +67,7 @@ describe("ProductRepository test", () => {
         expect(product.id.id).toEqual("1");
         expect(product.name).toEqual("Product 1");
         expect(product.description).toEqual("Product 1 description");
-        expect(product.purchasePrice).toEqual(50);
+        expect(product.price).toEqual(50);
         expect(product.stock).toEqual(10);
     });
 

@@ -1,4 +1,4 @@
-import Id from "../../../../@shared/domain/value-object/id.value-object";
+import Id from "../../../@shared/domain/value-object/id.value-object";
 import Product from "../../domain/product.entity";
 import { PlaceOrderInputDto } from "./place-order.dto";
 import PlaceOrderUsecase from "./place-order.usecase";
@@ -100,7 +100,7 @@ describe("PlaceOrderUsecase unit test", () => {
                     id: "1",
                     name: "Product 1",
                     description: "Product 1 description",
-                    salesPrice: 10,
+                    price: 10,
                 })
             };
 
@@ -111,7 +111,7 @@ describe("PlaceOrderUsecase unit test", () => {
                     id: new Id("1"),
                     name: "Product 1",
                     description: "Product 1 description",
-                    salePrice: 10,
+                    price: 10,
                 })
             );
 
@@ -229,13 +229,13 @@ describe("PlaceOrderUsecase unit test", () => {
                     id: new Id("1"),
                     name: "Product 1",
                     description: "Product 1 description",
-                    salePrice: 10,
+                    price: 10,
                 }),
                 "2": new Product({
                     id: new Id("2"),
                     name: "Product 2",
                     description: "Product 2 description",
-                    salePrice: 20,
+                    price: 20,
                 }),
             };
 
@@ -346,11 +346,11 @@ describe("PlaceOrderUsecase unit test", () => {
                         {
                             id: products["1"].id.id,
                             name: products["1"].name,
-                            price: products["1"].salePrice,
+                            price: products["1"].price,
                         },      {
                             id: products["2"].id.id,
                             name: products["2"].name,
-                            price: products["2"].salePrice,
+                            price: products["2"].price,
                         }
                     ]
                 });

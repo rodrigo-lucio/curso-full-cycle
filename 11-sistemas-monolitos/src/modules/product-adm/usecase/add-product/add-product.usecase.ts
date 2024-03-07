@@ -18,7 +18,7 @@ export default class AddProductUseCase implements UseCaseInterface {
             id: new Id(input.id),
             name: input.name,
             description: input.description,
-            purchasePrice: input.purchasePrice,
+            price: input.price,
             stock: input.stock
         }
 
@@ -29,7 +29,7 @@ export default class AddProductUseCase implements UseCaseInterface {
             id: product.id.id,
             name: product.name,
             description: product.description,
-            purchasePrice: product.purchasePrice,
+            price: product.price,
             stock: product.stock,
             createdAt: product.createdAt,
             updatedAt: product.updatedAt

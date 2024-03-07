@@ -1,10 +1,10 @@
-import Id from "../../../../@shared/domain/value-object/id.value-object";
-import UseCaseInterface from "../../../../@shared/usecase/use-case.interface";
-import ClientAdmFacadeInterface from "../../../../client-adm/facade/client-adm.facade.interface";
-import InvoiceFacade from "../../../../invoice/facade/invoice.facade";
-import PaymentFacade from "../../../../payment/facade/payment.facade";
-import ProductAdmFacade from "../../../../product-adm/facade/product-adm.facade";
-import StoreCatalogFacade from "../../../../store-catalog/facade/store-catalog.facade";
+import Id from "../../../@shared/domain/value-object/id.value-object";
+import UseCaseInterface from "../../../@shared/usecase/use-case.interface";
+import ClientAdmFacadeInterface from "../../../client-adm/facade/client-adm.facade.interface";
+import InvoiceFacade from "../../../invoice/facade/invoice.facade";
+import PaymentFacade from "../../../payment/facade/payment.facade";
+import ProductAdmFacade from "../../../product-adm/facade/product-adm.facade";
+import StoreCatalogFacade from "../../../store-catalog/facade/store-catalog.facade";
 import Client from "../../domain/client.entity";
 import Order from "../../domain/order.entity";
 import Product from "../../domain/product.entity";
@@ -85,7 +85,7 @@ export default class PlaceOrderUsecase implements UseCaseInterface {
                 return {
                     id: p.id.id,
                     name: p.name,
-                    price: p.salePrice
+                    price: p.price
                 };
             }),
         })
@@ -132,7 +132,7 @@ export default class PlaceOrderUsecase implements UseCaseInterface {
             id: new Id(product.id),
             description: product.description,
             name: product.name,
-            salePrice: product.salesPrice
+            price: product.price
         });
     }
 }

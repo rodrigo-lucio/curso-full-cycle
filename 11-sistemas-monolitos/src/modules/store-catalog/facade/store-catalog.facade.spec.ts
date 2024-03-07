@@ -31,14 +31,18 @@ describe("StoreCatalg unit tests", () => {
             id: "1",
             name: "Product 1",
             description: "Desc 1",
-            salesPrice: 100,
+            stock: 1,
+            price: 100,
+            createdAt: new Date(),
+            updatedAt: new Date()
         });
 
         const result = await facade.find({id: "1"});
         expect(result.id).toBe("1");
         expect(result.name).toBe("Product 1");
         expect(result.description).toBe("Desc 1");
-        expect(result.salesPrice).toBe(100);
+        expect(result.price).toBe(100);
+
 
     });
 
@@ -50,25 +54,31 @@ describe("StoreCatalg unit tests", () => {
             id: "1",
             name: "Product 1",
             description: "Desc 1",
-            salesPrice: 100,
+            stock: 1,
+            price: 100,
+            createdAt: new Date(),
+            updatedAt: new Date()
         });
         await ProductModel.create({
             id: "2",
             name: "Product 2",
             description: "Desc 2",
-            salesPrice: 200,
+            stock: 1,
+            price: 200,
+            createdAt: new Date(),
+            updatedAt: new Date()
         });
 
         const result = await facade.findAll({});
         expect(result.products[0].id).toBe("1");
         expect(result.products[0].name).toBe("Product 1");
         expect(result.products[0].description).toBe("Desc 1");
-        expect(result.products[0].salesPrice).toBe(100);
+        expect(result.products[0].price).toBe(100);
 
         expect(result.products[1].id).toBe("2");
         expect(result.products[1].name).toBe("Product 2");
         expect(result.products[1].description).toBe("Desc 2");
-        expect(result.products[1].salesPrice).toBe(200);
+        expect(result.products[1].price).toBe(200);
 
     });
 

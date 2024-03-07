@@ -6,14 +6,14 @@ const product = new Product({
     id: new Id("1"),
     name: "Product 1",
     description: "Description 1",
-    salesPrice: 100
+    price: 100
 });
 
 const product2 = new Product({
     id: new Id("2"),
     name: "Product 2",
     description: "Description 2",
-    salesPrice: 200
+    price: 200
 });
 
 const MockRepository = () => {
@@ -35,12 +35,12 @@ describe("Find all products usecase unit test", () => {
         expect(result.products[0].id).toEqual(product.id.id);
         expect(result.products[0].name).toEqual(product.name);
         expect(result.products[0].description).toEqual(product.description);
-        expect(result.products[0].salesPrice).toEqual(product.salesPrice);
+        expect(result.products[0].price).toEqual(product.price);
         
         expect(result.products[1].id).toEqual(product2.id.id);
         expect(result.products[1].name).toEqual(product2.name);
         expect(result.products[1].description).toEqual(product2.description);
-        expect(result.products[1].salesPrice).toEqual(product2.salesPrice);
+        expect(result.products[1].price).toEqual(product2.price);
 
     });
 });
