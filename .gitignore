@@ -4,3 +4,4 @@ docker/mysql
 *.db
 06-ddd/aluno/memory
 *.sqlite
+/12-arq-microsservicos/.idea
