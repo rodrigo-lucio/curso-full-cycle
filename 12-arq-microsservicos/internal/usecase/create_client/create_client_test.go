@@ -27,7 +27,7 @@ func TestCreateClientUseCase_Execute(t *testing.T) {
 	uc := NewCreateClientUseCase(m)
 	output, err := uc.Execute(CreateClientInputDTO{
 		Name:  "Rodrigo Lucio",
-		Email: "lucidigo@gmail.com",
+		Email: "luciodigo@gmail.com",
 	})
 	assert.Nil(t, err)
 	assert.NotNil(t, output)
