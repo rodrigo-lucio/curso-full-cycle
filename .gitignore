@@ -5,3 +5,6 @@ docker/mysql
 06-ddd/aluno/memory
 *.sqlite
 /12-arq-microsservicos/.idea
+13-event-driven-architecture/.idea/13-event-driven-architecture.iml
+13-event-driven-architecture/.idea/modules.xml
+13-event-driven-architecture/.idea/vcs.xml
