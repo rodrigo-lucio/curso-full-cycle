@@ -27,3 +27,15 @@ func (eventDispatcher *EventDispatcher) Register(eventName string, handler Event
 	eventDispatcher.handlers[eventName] = append(eventDispatcher.handlers[eventName], handler)
 	return nil
 }
+
+func (eventDispatcher *EventDispatcher) Has(eventName string, handler EventHandlerInterface) bool {
+	if _, ok := eventDispatcher.handlers[eventName]; ok {
+		for _, h := range eventDispatcher.handlers[eventName] {
+			if h == handler {
+				return true
+			}
+		}
+	}
+	return false
+}
+
