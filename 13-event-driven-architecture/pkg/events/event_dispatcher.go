@@ -52,3 +52,14 @@ func (eventDispatcher *EventDispatcher) Dispatch(event EventInterface) error {
 func (eventDispatcher *EventDispatcher) Clear() {
 	eventDispatcher.handlers = make(map[string][]EventHandlerInterface)
 }
+
+func (eventDispatcher *EventDispatcher) Remove(eventName string, handler EventHandlerInterface) error {
+	if _, ok := eventDispatcher.handlers[eventName]; ok {
+		for i, h := range eventDispatcher.handlers[eventName] {
+			if h == handler {
+				eventDispatcher.handlers[eventName] = append(eventDispatcher.handlers[eventName][:i], eventDispatcher.handlers[eventName][i+1:]...)
+			}
+		}
+	}
+	return nil
+}
