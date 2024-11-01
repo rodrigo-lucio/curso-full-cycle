@@ -1,6 +1,8 @@
 package events
 
-import "errors"
+import (
+	"errors"
+)
 
 var ErrHandlerAlreadyRegistered = errors.New("handler already registered")
 
@@ -15,7 +17,6 @@ func NewEventDispatcher() *EventDispatcher {
 }
 
 func (eventDispatcher *EventDispatcher) Register(eventName string, handler EventHandlerInterface) error {
-
 	if _, ok := eventDispatcher.handlers[eventName]; ok {
 		for _, h := range eventDispatcher.handlers[eventName] {
 			if h == handler {
@@ -37,6 +38,15 @@ func (eventDispatcher *EventDispatcher) Has(eventName string, handler EventHandl
 		}
 	}
 	return false
+}
+
+func (eventDispatcher *EventDispatcher) Dispatch(event EventInterface) error {
+	if handlers, ok := eventDispatcher.handlers[event.GetName()]; ok {
+		for _, handler := range handlers {
+			handler.Handle(event)
+		}
+	}
+	return nil
 }
 
 func (eventDispatcher *EventDispatcher) Clear() {
