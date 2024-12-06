@@ -1,5 +1,6 @@
 
 docker/node/node_modules
+.docker/
 docker/mysql
 *.db
 06-ddd/aluno/memory
@@ -8,3 +9,4 @@ docker/mysql
 13-event-driven-architecture/.idea/13-event-driven-architecture.iml
 13-event-driven-architecture/.idea/modules.xml
 13-event-driven-architecture/.idea/vcs.xml
+13-event-driven-architecture/.docker/
