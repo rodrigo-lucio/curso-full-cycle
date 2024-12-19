@@ -31,12 +31,12 @@ func (c *ClientDB) Get(id string) (*entity.Client, error) {
 }
 
 func (c *ClientDB) Save(client *entity.Client) error {
-	stmt, err := c.DB.Prepare("INSERT INTO clients (id, name, email) VALUES (?, ?, ?)")
+	stmt, err := c.DB.Prepare("INSERT INTO clients (id, name, email, created_at) VALUES (?, ?, ?, ?)")
 	if err != nil {
 		return err
 	}
 	defer stmt.Close()
-	_, err = stmt.Exec(client.ID, client.Name, client.Email)
+	_, err = stmt.Exec(client.ID, client.Name, client.Email, client.CreatedAt)
 	if err != nil {
 		return err
 	}

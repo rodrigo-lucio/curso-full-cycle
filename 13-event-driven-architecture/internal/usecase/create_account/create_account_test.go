@@ -30,6 +30,11 @@ func (m *AccountGatewayMock) FindByID(id string) (*entity.Account, error) {
 	return args.Get(0).(*entity.Account), args.Error(1)
 }
 
+func (m *AccountGatewayMock) UpdateBalance(account *entity.Account) error {
+	args := m.Called(account)
+	return args.Error(0)
+}
+
 func (m *AccountGatewayMock) Save(account *entity.Account) error {
 	args := m.Called(account)
 	return args.Error(0)
@@ -41,7 +46,7 @@ func TestCreateAccountUseCase_Execute(t *testing.T) {
 	clientMock.On("Get", client.ID).Return(client, nil)
 
 	accountMock := &AccountGatewayMock{}
-	accountMock.On("Create", mock.Anything).Return(nil)
+	accountMock.On("Save", mock.Anything).Return(nil)
 
 	uc := NewCreateAccountUseCase(accountMock, clientMock)
 
@@ -54,5 +59,5 @@ func TestCreateAccountUseCase_Execute(t *testing.T) {
 	clientMock.AssertExpectations(t)
 	accountMock.AssertExpectations(t)
 	clientMock.AssertNumberOfCalls(t, "Get", 1)
-	accountMock.AssertNumberOfCalls(t, "Create", 1)
+	accountMock.AssertNumberOfCalls(t, "Save", 1)
 }
