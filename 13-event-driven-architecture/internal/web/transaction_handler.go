@@ -2,8 +2,9 @@ package web
 
 import (
 	"encoding/json"
-	"github.com.br/devfullcycle/fc-ms-wallet/internal/usecase/create_transaction"
 	"net/http"
+
+	"github.com.br/devfullcycle/fc-ms-wallet/internal/usecase/create_transaction"
 )
 
 type WebTransactionHandler struct {
@@ -26,7 +27,7 @@ func (h *WebTransactionHandler) CreateTransaction(w http.ResponseWriter, r *http
 	ctx := r.Context()
 	output, err := h.CreateTransactionUseCase.Execute(ctx, dto)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
+		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte(err.Error()))
 		return
 	}
