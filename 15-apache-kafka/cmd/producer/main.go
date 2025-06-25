@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 	"log"
 )
@@ -11,15 +10,17 @@ func main() {
 	producer := NewKafkaProducer()
 	Publish("mensagem baba", "teste", producer, nil, deliveryChan)
 
-	event := <-deliveryChan
-	message := event.(*kafka.Message)
-	if message.TopicPartition.Error != nil {
-		fmt.Println("Erro ao enviar")
-	} else {
-		fmt.Println("Mensagem enviada: ", message.TopicPartition)
-	}
-
-	producer.Flush(1000)
+	go DeliveryReport(deliveryChan)
+	//Forma síncrona
+	//event := <-deliveryChan
+	//message := event.(*kafka.Message)
+	//if message.TopicPartition.Error != nil {
+	//	fmt.Println("Erro ao enviar")
+	//} else {
+	//	fmt.Println("Mensagem enviada: ", message.TopicPartition)
+	//}
+	//
+	//producer.Flush(1000)
 }
 
 func NewKafkaProducer() *kafka.Producer {
@@ -48,4 +49,22 @@ func Publish(msg string, topic string, producer *kafka.Producer, key []byte, del
 		return err
 	}
 	return nil
+}
+
+func DeliveryReport(deliveryChan chan kafka.Event) {
+	for event := range deliveryChan {
+		switch e := event.(type) {
+		case *kafka.Message:
+			if e.TopicPartition.Error != nil {
+				log.Printf("Mensagem falhou: %v\n", e.TopicPartition)
+			} else {
+				log.Printf("Mensagem enviada: %v\n", e.TopicPartition)
+				//anotar no banco de dados que a mensagem foi enviada
+				//confirma que a transferencia ocorreu
+				//OBS: Confirmação de entrega daqui para o Kafka
+			}
+		default:
+			log.Printf("Evento desconhecido: %v\n", e)
+		}
+	}
 }
