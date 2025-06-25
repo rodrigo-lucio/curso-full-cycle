@@ -25,7 +25,10 @@ func main() {
 
 func NewKafkaProducer() *kafka.Producer {
 	configMap := &kafka.ConfigMap{
-		"bootstrap.servers": "15-apache-kafka-kafka-1:9092",
+		"bootstrap.servers":   "15-apache-kafka-kafka-1:9092",
+		"delivery.timeout.ms": "0",   //timeout de confirmação de entrega
+		"acks":                "all", //confirmação de entrega de todas as réplicas, pode ser 0, 1 ou all. 0 é sem confirmação e 1 é apenas no líder
+		"enable.idempotence":  true,  //habilita idempotência para evitar duplicação de mensagens, o acks deve ser "all" para funcionar corretamente
 	}
 	producer, err := kafka.NewProducer(configMap)
 	if err != nil {
