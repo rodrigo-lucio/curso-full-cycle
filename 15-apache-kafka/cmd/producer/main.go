@@ -8,9 +8,14 @@ import (
 func main() {
 	deliveryChan := make(chan kafka.Event)
 	producer := NewKafkaProducer()
-	Publish("mensagem baba", "teste", producer, nil, deliveryChan)
+	//Publish("mensagem sem key, vai para qualquer partição", "teste", producer, nil, deliveryChan)
+	Publish("{mensagem com key para enviar sempre para a mesma partição e garantir a ordem}",
+		"teste",
+		producer,
+		[]byte("transacao"),
+		deliveryChan)
+	DeliveryReport(deliveryChan)
 
-	go DeliveryReport(deliveryChan)
 	//Forma síncrona
 	//event := <-deliveryChan
 	//message := event.(*kafka.Message)
@@ -20,7 +25,7 @@ func main() {
 	//	fmt.Println("Mensagem enviada: ", message.TopicPartition)
 	//}
 	//
-	//producer.Flush(1000)
+	producer.Flush(10000)
 }
 
 func NewKafkaProducer() *kafka.Producer {
