@@ -6,3 +6,4 @@ docker/mysql
 06-ddd/aluno/memory
 *.sqlite
 *.idea
+*.gitattributes

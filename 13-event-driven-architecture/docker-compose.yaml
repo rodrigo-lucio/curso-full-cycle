@@ -1,25 +1,56 @@
 version: '3'
 
 services:
+
   goapp: 
-    build: .
+    build: ./go-app
     platform: linux/amd64
+    container_name: goapp
     volumes:
       - .:/app
     ports:
-      - 8080:8080
-
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      
   mysql:
     image: mysql:5.7
+    container_name: mysql
     platform: linux/amd64
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: wallet
       MYSQL_PASSWORD: root
     ports:
-      - 3306:3306
+      - "3306:3306"
     volumes:
       - .docker/mysql:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 10s
+      retries: 3
+
+  migrate-go-app:
+    image: golang:1.22
+    container_name: migrate-go-app
+    platform: linux/amd64
+    depends_on:
+      mysql:
+        condition: service_healthy
+    working_dir: /app
+    volumes:
+      - ./go-app/db/migrations:/app/migrations:ro
+    entrypoint: ["/bin/sh","-c"]
+    command: >
+      "
+      apt-get update && apt-get install -y wget netcat-openbsd &&
+      wget -qO /usr/local/bin/goose https://github.com/pressly/goose/releases/download/v3.21.1/goose_linux_x86_64 &&
+      chmod +x /usr/local/bin/goose &&
+      until nc -z mysql 3306; do echo '⌛ aguardando MySQL...'; sleep 2; done &&
+      goose -dir ./migrations mysql 'root:root@tcp(mysql:3306)/wallet?parseTime=true&multiStatements=true' up
+      "
 
   zookeeper:
     image: "confluentinc/cp-zookeeper:6.1.0"
@@ -71,3 +102,28 @@ services:
       CONFLUENT_METRICS_TOPIC_REPLICATION: 1
       PORT: 9021
   
+  challenge-database:
+    container_name: challenge-database
+    image: postgres:15.4-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: challenge
+    ports:
+      - "5432:5432"  
+    volumes:
+      - .docker/challenge-database:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d challenge"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  challenge-app:
+    container_name: challenge-app
+    build: ./fc-eda-spring-boot
+    ports:
+      - "3003:3003"
+    depends_on:
+      challenge-database:
+        condition: service_healthy
