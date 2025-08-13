@@ -104,7 +104,7 @@ services:
   
   challenge-database:
     container_name: challenge-database
-    image: postgres:15.4-alpine
+    image: postgres:16.4-alpine
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -121,7 +121,7 @@ services:
 
   challenge-app:
     container_name: challenge-app
-    build: ./fc-eda-spring-boot
+    build: ./fc-eda-challenge
     ports:
       - "3003:3003"
     depends_on:
