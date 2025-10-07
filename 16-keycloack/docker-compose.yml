@@ -23,7 +23,7 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - ./.docker/dbdata:/var/lib/mysql
+      - ./keycloack/.docker/dbdata:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=keycloak
